@@ -3,147 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Market Pulse AI - Trading Platform</title>
+    <title>Market Pulse AI | Next-Gen Crypto & Stock Exchange</title>
+    <!-- Rock-solid styling engine -->
     <script src="https://tailwindcss.com"></script>
-
-    <style>body { background-color: #0b0f19; color: #ffffff; }</style>
+    <style>
+        body { background-color: #030712; color: #f9fafb; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
+        .gradient-glow { background: radial-gradient(circle at 50% -20%, rgba(16, 185, 129, 0.15) 0%, transparent 60%); }
+        .crypto-card-purple { background: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 100%); }
+        .glow-green:focus { border-color: #10b981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.2); }
+    </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans">
+<body class="min-h-screen flex flex-col gradient-glow overflow-x-hidden">
 
-    <!-- AUTHENTICATION CONTAINER (Sign In / Sign Up) -->
-    <div id="auth-container" class="flex-1 flex items-center justify-center p-4">
-        <div class="w-full max-w-md space-y-6 rounded-2xl bg-[#111827] p-8 border border-gray-800 shadow-2xl">
+    <!-- ================= AUTHENTICATION WALL ================= -->
+    <div id="auth-container" class="flex-1 flex items-center justify-center p-4 min-h-screen">
+        <div class="w-full max-w-md space-y-6 rounded-3xl bg-[#0b0f19]/90 p-8 border border-emerald-500/20 shadow-[0_0_50px_rgba(16,185,129,0.05)] backdrop-blur-xl">
+            
             <div class="text-center">
-                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-green-500/10 text-green-400 text-2xl border border-green-500/20">📊</div>
-                <h2 id="auth-title" class="mt-4 text-2xl font-bold tracking-tight text-white">Market Pulse AI</h2>
-                <p id="auth-subtitle" class="mt-2 text-sm text-gray-400">Log in to your trading pulse.</p>
+                <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-400 text-3xl border border-emerald-500/30 shadow-[0_0_20px_rgba(16,185,129,0.2)] animate-pulse">⚡</div>
+                <h2 id="auth-title" class="mt-4 text-3xl font-black tracking-tight text-white bg-gradient-to-r from-white via-emerald-400 to-emerald-200 bg-clip-text text-transparent">MARKET PULSE AI</h2>
+                <p id="auth-subtitle" class="mt-2 text-sm text-gray-400">Trade Crypto & Stocks with Instant Fiat Processing.</p>
+            </div>
+
+            <!-- Gamified Promo Badge -->
+            <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 text-center text-xs font-semibold text-emerald-400 flex items-center justify-center space-x-2">
+                🎁 <span>Create account now to lock in <b>$25 Mystery Box Reward</b></span>
             </div>
 
             <form class="space-y-4" onsubmit="event.preventDefault(); login();">
                 <div id="signup-fields" class="hidden space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-300">Full Name</label>
-                        <input type="text" class="mt-1 block w-full rounded-lg bg-[#1f2937] border border-gray-700 px-4 py-2.5 text-white focus:border-green-500 focus:outline-none" placeholder="John Doe">
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400">Full Name</label>
+                        <input type="text" class="mt-1 block w-full rounded-xl bg-[#111827] border border-gray-800 px-4 py-3 text-white glow-green transition-all" placeholder="John Doe">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-300">Email address</label>
-                    <input type="email" required class="mt-1 block w-full rounded-lg bg-[#1f2937] border border-gray-700 px-4 py-2.5 text-white focus:border-green-500 focus:outline-none" placeholder="you@example.com">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400">Email address</label>
+                    <input type="email" required class="mt-1 block w-full rounded-xl bg-[#111827] border border-gray-800 px-4 py-3 text-white glow-green transition-all" placeholder="you@example.com">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-300">Password</label>
-                    <input type="password" required class="mt-1 block w-full rounded-lg bg-[#1f2937] border border-gray-700 px-4 py-2.5 text-white focus:border-green-500 focus:outline-none" placeholder="••••••••">
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-gray-400">Password</label>
+                    <input type="password" required class="mt-1 block w-full rounded-xl bg-[#111827] border border-gray-800 px-4 py-3 text-white glow-green transition-all" placeholder="••••••••">
                 </div>
-                <button type="submit" id="auth-submit-btn" class="w-full rounded-lg bg-green-600 py-3 text-sm font-semibold text-white hover:bg-green-500 transition-colors">Log In</button>
+                
+                <button type="submit" id="auth-submit-btn" class="w-full rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 py-3.5 text-sm font-bold text-white hover:from-emerald-400 hover:to-teal-500 shadow-lg shadow-emerald-500/20 transition-all transform active:scale-95">Log In</button>
             </form>
 
             <p class="text-center text-sm text-gray-400">
                 <span id="auth-switch-text">New to Market Pulse AI?</span> 
-                <button onclick="toggleAuth()" id="auth-switch-btn" class="font-semibold text-green-400 hover:text-green-300 ml-1">Create an account</button>
+                <button onclick="toggleAuth()" id="auth-switch-btn" class="font-bold text-emerald-400 hover:text-emerald-300 ml-1 transition-colors">Create an account</button>
             </p>
         </div>
     </div>
 
-    <!-- MAIN TRADING DASHBOARD (Hidden until Logged In) -->
-    <div id="dashboard" class="hidden flex-1 flex flex-col">
-        <!-- Navigation Header -->
-        <header class="bg-[#111827] border-b border-gray-800 px-6 py-4 flex justify-between items-center">
+    <!-- ================= LIVE PROFESSIONAL TRADING PORTAL ================= -->
+    <div id="dashboard" class="hidden flex-1 flex flex-col animate-fadeIn">
+        <!-- Premium Navigation Hub -->
+        <header class="bg-[#0b0f19]/80 border-b border-gray-900 px-4 md:px-8 py-4 flex justify-between items-center sticky top-0 backdrop-blur-md z-50">
             <div class="flex items-center space-x-2">
-                <span class="text-xl">📊</span>
-                <span class="font-bold text-lg tracking-wider text-white">MARKET PULSE AI</span>
+                <span class="text-2xl text-emerald-400 filter drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">⚡</span>
+                <span class="font-black text-xl tracking-wider text-white">MARKET PULSE AI</span>
+                <span class="hidden sm:inline bg-emerald-500/10 text-emerald-400 font-mono text-[10px] px-2 py-0.5 rounded-full border border-emerald-500/20">PRO PLATFORM</span>
             </div>
-            <div class="flex items-center space-x-6">
+            <div class="flex items-center space-x-4 md:space-x-6">
                 <div class="text-right">
-                    <p class="text-xs text-gray-400">Wallet Balance</p>
-                    <p class="text-sm font-bold text-green-400" id="wallet-display">$10,000.00</p>
+                    <p class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Net Portfolio</p>
+                    <p class="text-sm md:text-base font-black text-emerald-400" id="wallet-display">$25,482.10</p>
                 </div>
-                <button onclick="logout()" class="rounded-lg bg-gray-800 px-4 py-2 text-xs font-semibold text-gray-300 hover:bg-gray-700 transition-colors">Log Out</button>
+                <button onclick="logout()" class="rounded-xl bg-gray-900/80 border border-gray-800 px-3 py-2 text-xs font-bold text-gray-400 hover:text-white hover:border-gray-700 transition-all">Log Out</button>
             </div>
         </header>
 
-        <!-- Dashboard Content Grid -->
-        <main class="flex-1 p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl w-full mx-auto">
-            <!-- Market Watchlist -->
-            <div class="lg:col-span-2 bg-[#111827] border border-gray-800 rounded-2xl p-6 space-y-4">
-                <h3 class="text-lg font-bold text-white">Live Markets (Stocks & Crypto)</h3>
-                <div class="divide-y divide-gray-800 overflow-x-auto">
-                    <div class="flex justify-between py-3 items-center">
-                        <div><p class="font-semibold">BTC / USD</p><p class="text-xs text-gray-400">Bitcoin</p></div>
-                        <p class="font-mono text-green-400">$94,250.00</p>
+        <!-- Main Dashboard View Matrix -->
+        <main class="flex-1 p-4 md:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl w-full mx-auto">
+            
+            <!-- COLUMN 1 & 2: LIVE ASSET WORKSTATION -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Viral Rewards Hub -->
+                <div class="crypto-card-purple rounded-3xl p-5 border border-purple-500/30 shadow-lg relative overflow-hidden flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div class="space-y-1">
+                        <span class="bg-purple-400/20 text-purple-300 text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full">Viral Incentive Panel</span>
+                        <h4 class="text-lg font-black text-white">Claim Rewards & Boost Your Yields! 🔥</h4>
+                        <p class="text-xs text-purple-200/70">Deposit at least $10 instantly with debit card or wire transfer to draw items.</p>
                     </div>
-                    <div class="flex justify-between py-3 items-center">
-                        <div><p class="font-semibold">AAPL</p><p class="text-xs text-gray-400">Apple Inc.</p></div>
-                        <p class="font-mono text-green-400">$242.10</p>
-                    </div>
-                    <div class="flex justify-between py-3 items-center">
-                        <div><p class="font-semibold">ETH / USD</p><p class="text-xs text-gray-400">Ethereum</p></div>
-                        <p class="font-mono text-red-400">$3,410.50</p>
-                    </div>
-                    <div class="flex justify-between py-3 items-center">
-                        <div><p class="font-semibold">TSLA</p><p class="text-xs text-gray-400">Tesla Motors</p></div>
-                        <p class="font-mono text-green-400">$315.80</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Trading & Banking Panel -->
-            <div class="space-y-6">
-                <!-- Buy/Sell Order Panel -->
-                <div class="bg-[#111827] border border-gray-800 rounded-2xl p-6 space-y-4">
-                    <h3 class="text-md font-bold text-white">Place Order</h3>
-                    <div class="grid grid-cols-2 gap-2 bg-[#1f2937] p-1 rounded-lg">
-                        <button class="bg-green-600 text-white rounded-md py-1.5 text-xs font-bold">BUY</button>
-                        <button class="text-gray-400 rounded-md py-1.5 text-xs font-bold hover:text-white">SELL</button>
-                    </div>
-                    <div class="space-y-3">
-                        <input type="text" placeholder="Asset Ticker (e.g., BTC, AAPL)" class="w-full rounded-lg bg-[#1f2937] border border-gray-700 px-3 py-2 text-sm text-white focus:outline-none">
-                        <input type="number" placeholder="Amount (USD)" class="w-full rounded-lg bg-[#1f2937] border border-gray-700 px-3 py-2 text-sm text-white focus:outline-none">
-                        <button onclick="alert('Trade simulated! Moving live requires a broker API.')" class="w-full rounded-lg bg-green-600 py-2.5 text-sm font-semibold text-white hover:bg-green-500">Execute Trade</button>
+                    <div class="flex gap-2 w-full sm:w-auto">
+                        <button onclick="alert('Daily Bonus claimed! +$5.00 demo trading bonus added.')" class="flex-1 sm:flex-none whitespace-nowrap bg-white text-purple-900 font-bold text-xs px-4 py-2.5 rounded-xl shadow-md hover:bg-purple-100 transition-all">Claim Daily Bonus</button>
+                        <button onclick="alert('Invite link copied! Share it to earn 40% commissions on friend swaps.')" class="flex-1 sm:flex-none whitespace-nowrap bg-purple-600 text-white font-bold text-xs px-4 py-2.5 rounded-xl border border-purple-400/30 hover:bg-purple-500 transition-all">🔗 Invite & Earn</button>
                     </div>
                 </div>
 
-                <!-- Banking Panel (Deposit & Withdraw) -->
-                <div class="bg-[#111827] border border-gray-800 rounded-2xl p-6 space-y-4">
-                    <h3 class="text-md font-bold text-white">Funding / Banking</h3>
-                    <div class="space-y-2">
-                        <label class="block text-xs text-gray-400">Select Method</label>
-                        <select class="w-full rounded-lg bg-[#1f2937] border border-gray-700 px-3 py-2 text-sm text-white focus:outline-none">
-                            <option>💳 Debit Card (Instant Deposit)</option>
-                            <option>🏦 Bank ACH Account (Deposit / Withdrawal)</option>
-                        </select>
+                <!-- Global Asset Desk -->
+                <div class="bg-[#0b0f19] border border-gray-900 rounded-3xl p-6 space-y-4 shadow-xl">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-black tracking-tight text-white flex items-center gap-2">🌐 Comprehensive Asset Markets</h3>
+                        <span class="text-xs text-gray-400 bg-gray-900 px-2 py-1 rounded-lg">Real-Time Sync</span>
                     </div>
-                    <div class="space-y-2">
-                        <input type="number" placeholder="Amount ($)" class="w-full rounded-lg bg-[#1f2937] border border-gray-700 px-3 py-2 text-sm text-white focus:outline-none">
-                        <div class="grid grid-cols-2 gap-2">
-                            <button onclick="alert('Deposit processing simulation')" class="rounded-lg bg-gray-800 border border-gray-700 py-2 text-xs font-semibold text-white hover:bg-gray-700">Deposit</button>
-                            <button onclick="alert('Withdrawal processing simulation')" class="rounded-lg bg-gray-800 border border-gray-700 py-2 text-xs font-semibold text-white hover:bg-gray-700">Withdraw</button>
+                    <div class="divide-y divide-gray-900 overflow-x-auto">
+                        <!-- Crypto Asset Rows -->
+                        <div class="flex justify-between py-3.5 items-center hover:bg-gray-900/30 px-2 rounded-xl transition-all">
+                            <div class="flex items-center space-x-3">
+                                <div class="text-2xl p-1 bg-amber-500/10 text-amber-400 rounded-xl">🪙</div>
+                                <div><p class="font-bold text-sm text-white">BTC / USD</p><p class="text-xs text-gray-400">Bitcoin Core</p></div>
+                            </div>
+                            <div class="text-right"><p class="font-mono text-sm font-bold text-emerald-400">$94,250.00</p><p class="text-[10px] text-emerald-400 font-bold">+4.82%</p></div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <!-- UI Interaction Scripts -->
-    <script>
-        let isSignUp = false;
-        function toggleAuth() {
-            isSignUp = !isSignUp;
-            document.getElementById('signup-fields').classList.toggle('hidden', !isSignUp);
-            document.getElementById('auth-title').innerText = isSignUp ? "Create Account" : "Market Pulse AI";
-            document.getElementById('auth-subtitle').innerText = isSignUp ? "Sign up to start trading asset portfolios." : "Log in to your trading pulse.";
-            document.getElementById('auth-submit-btn').innerText = isSignUp ? "Sign Up" : "Log In";
-            document.getElementById('auth-switch-text').innerText = isSignUp ? "Already have an account?" : "New to Market Pulse AI?";
-            document.getElementById('auth-switch-btn').innerText = isSignUp ? "Log in" : "Create an account";
-        }
-        function login() {
-            document.getElementById('auth-container').classList.add('hidden');
-            document.getElementById('dashboard').classList.remove('hidden');
-        }
-        function logout() {
-            document.getElementById('dashboard').classList.add('hidden');
-            document.getElementById('auth-container').classList.remove('hidden');
-        }
-    </script>
-</body>
-</html>
+                        <div class="flex justify-between py-3.5 items-center hover:bg-gray-900/30 px-2 rounded-xl transition-all">
+                            <div class="flex items-center space-x-3">
+                                <div class="text-2xl p-1 bg-blue-500/10 text-blue-400 rounded-xl">🔷</div>
+                                <div><p class="font-bold text-sm text-white">ETH / USD</p><p class="text-xs text-gray-400">Ethereum Protocol</p></div>
+                            </div>
+                            <div class="text-right"><p class="font-mono text-sm font-bold text-red-400">$3,410.50</p><p class="text-[10px] text-red-400 font-bold">-1.15%</p></div>
+                        </div>
+                        <div class="flex justify-between py-3.5 items-center hover:bg-gray-900/30 px-2 rounded-xl transition-all">
+                            <div class="flex items-center space-x-3">
+                                <div class="text-2xl p-1 bg-yellow-500/10 text-yellow-400 rounded-xl">🐕</div>
+                                <div><p class="font-bold text-sm text-white">DOGE / USD</p><p class="text-xs text-gray-400">Dogecoin Infrastructure</p></div>
+                            </div>
