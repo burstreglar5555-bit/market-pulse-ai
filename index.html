@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Pulse AI - Trading Platform</title>
+    <script src="https://jsdelivr.net"></script>
+    <style>body { background-color: #0b0f19; color: #ffffff; }</style>
+</head>
+<body class="min-h-screen flex flex-col font-sans">
+
+    <!-- AUTHENTICATION CONTAINER (Sign In / Sign Up) -->
+    <div id="auth-container" class="flex-1 flex items-center justify-center p-4">
+        <div class="w-full max-w-md space-y-6 rounded-2xl bg-[#111827] p-8 border border-gray-800 shadow-2xl">
+            <div class="text-center">
+                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-green-500/10 text-green-400 text-2xl border border-green-500/20">📊</div>
+                <h2 id="auth-title" class="mt-4 text-2xl font-bold tracking-tight text-white">Market Pulse AI</h2>
+                <p id="auth-subtitle" class="mt-2 text-sm text-gray-400">Log in to your trading pulse.</p>
+            </div>
+
+            <form class="space-y-4" onsubmit="event.preventDefault(); login();">
+                <div id="signup-fields" class="hidden space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300">Full Name</label>
+                        <input type="text" class="mt-1 block w-full rounded-lg bg-[#1f2937] border border-gray-700 px-4 py-2.5 text-white focus:border-green-500 focus:outline-none" placeholder="John Doe">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300">Email address</label>
+                    <input type="email" required class="mt-1 block w-full rounded-lg bg-[#1f2937] border border-gray-700 px-4 py-2.5 text-white focus:border-green-500 focus:outline-none" placeholder="you@example.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300">Password</label>
+                    <input type="password" required class="mt-1 block w-full rounded-lg bg-[#1f2937] border border-gray-700 px-4 py-2.5 text-white focus:border-green-500 focus:outline-none" placeholder="••••••••">
+                </div>
+                <button type="submit" id="auth-submit-btn" class="w-full rounded-lg bg-green-600 py-3 text-sm font-semibold text-white hover:bg-green-500 transition-colors">Log In</button>
+            </form>
+
+            <p class="text-center text-sm text-gray-400">
+                <span id="auth-switch-text">New to Market Pulse AI?</span> 
+                <button onclick="toggleAuth()" id="auth-switch-btn" class="font-semibold text-green-400 hover:text-green-300 ml-1">Create an account</button>
+            </p>
+        </div>
+    </div>
+
+    <!-- MAIN TRADING DASHBOARD (Hidden until Logged In) -->
+    <div id="dashboard" class="hidden flex-1 flex flex-col">
+        <!-- Navigation Header -->
+        <header class="bg-[#111827] border-b border-gray-800 px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-xl">📊</span>
+                <span class="font-bold text-lg tracking-wider text-white">MARKET PULSE AI</span>
+            </div>
+            <div class="flex items-center space-x-6">
+                <div class="text-right">
+                    <p class="text-xs text-gray-400">Wallet Balance</p>
+                    <p class="text-sm font-bold text-green-400" id="wallet-display">$10,000.00</p>
+                </div>
+                <button onclick="logout()" class="rounded-lg bg-gray-800 px-4 py-2 text-xs font-semibold text-gray-300 hover:bg-gray-700 transition-colors">Log Out</button>
+            </div>
+        </header>
+
+        <!-- Dashboard Content Grid -->
+        <main class="flex-1 p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl w-full mx-auto">
+            <!-- Market Watchlist -->
+            <div class="lg:col-span-2 bg-[#111827] border border-gray-800 rounded-2xl p-6 space-y-4">
+                <h3 class="text-lg font-bold text-white">Live Markets (Stocks & Crypto)</h3>
+                <div class="divide-y divide-gray-800 overflow-x-auto">
+                    <div class="flex justify-between py-3 items-center">
+                        <div><p class="font-semibold">BTC / USD</p><p class="text-xs text-gray-400">Bitcoin</p></div>
+                        <p class="font-mono text-green-400">$94,250.00</p>
+                    </div>
+                    <div class="flex justify-between py-3 items-center">
+                        <div><p class="font-semibold">AAPL</p><p class="text-xs text-gray-400">Apple Inc.</p></div>
+                        <p class="font-mono text-green-400">$242.10</p>
+                    </div>
+                    <div class="flex justify-between py-3 items-center">
+                        <div><p class="font-semibold">ETH / USD</p><p class="text-xs text-gray-400">Ethereum</p></div>
+                        <p class="font-mono text-red-400">$3,410.50</p>
+                    </div>
+                    <div class="flex justify-between py-3 items-center">
+                        <div><p class="font-semibold">TSLA</p><p class="text-xs text-gray-400">Tesla Motors</p></div>
+                        <p class="font-mono text-green-400">$315.80</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trading & Banking Panel -->
+            <div class="space-y-6">
+                <!-- Buy/Sell Order Panel -->
+                <div class="bg-[#111827] border border-gray-800 rounded-2xl p-6 space-y-4">
+                    <h3 class="text-md font-bold text-white">Place Order</h3>
+                    <div class="grid grid-cols-2 gap-2 bg-[#1f2937] p-1 rounded-lg">
+                        <button class="bg-green-600 text-white rounded-md py-1.5 text-xs font-bold">BUY</button>
+                        <button class="text-gray-400 rounded-md py-1.5 text-xs font-bold hover:text-white">SELL</button>
+                    </div>
+                    <div class="space-y-3">
+                        <input type="text" placeholder="Asset Ticker (e.g., BTC, AAPL)" class="w-full rounded-lg bg-[#1f2937] border border-gray-700 px-3 py-2 text-sm text-white focus:outline-none">
+                        <input type="number" placeholder="Amount (USD)" class="w-full rounded-lg bg-[#1f2937] border border-gray-700 px-3 py-2 text-sm text-white focus:outline-none">
+                        <button onclick="alert('Trade simulated! Moving live requires a broker API.')" class="w-full rounded-lg bg-green-600 py-2.5 text-sm font-semibold text-white hover:bg-green-500">Execute Trade</button>
+                    </div>
+                </div>
+
+                <!-- Banking Panel (Deposit & Withdraw) -->
+                <div class="bg-[#111827] border border-gray-800 rounded-2xl p-6 space-y-4">
+                    <h3 class="text-md font-bold text-white">Funding / Banking</h3>
+                    <div class="space-y-2">
+                        <label class="block text-xs text-gray-400">Select Method</label>
+                        <select class="w-full rounded-lg bg-[#1f2937] border border-gray-700 px-3 py-2 text-sm text-white focus:outline-none">
+                            <option>💳 Debit Card (Instant Deposit)</option>
+                            <option>🏦 Bank ACH Account (Deposit / Withdrawal)</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <input type="number" placeholder="Amount ($)" class="w-full rounded-lg bg-[#1f2937] border border-gray-700 px-3 py-2 text-sm text-white focus:outline-none">
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="alert('Deposit processing simulation')" class="rounded-lg bg-gray-800 border border-gray-700 py-2 text-xs font-semibold text-white hover:bg-gray-700">Deposit</button>
+                            <button onclick="alert('Withdrawal processing simulation')" class="rounded-lg bg-gray-800 border border-gray-700 py-2 text-xs font-semibold text-white hover:bg-gray-700">Withdraw</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- UI Interaction Scripts -->
+    <script>
+        let isSignUp = false;
+        function toggleAuth() {
+            isSignUp = !isSignUp;
+            document.getElementById('signup-fields').classList.toggle('hidden', !isSignUp);
+            document.getElementById('auth-title').innerText = isSignUp ? "Create Account" : "Market Pulse AI";
+            document.getElementById('auth-subtitle').innerText = isSignUp ? "Sign up to start trading asset portfolios." : "Log in to your trading pulse.";
+            document.getElementById('auth-submit-btn').innerText = isSignUp ? "Sign Up" : "Log In";
+            document.getElementById('auth-switch-text').innerText = isSignUp ? "Already have an account?" : "New to Market Pulse AI?";
+            document.getElementById('auth-switch-btn').innerText = isSignUp ? "Log in" : "Create an account";
+        }
+        function login() {
+            document.getElementById('auth-container').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+        }
+        function logout() {
+            document.getElementById('dashboard').classList.add('hidden');
+            document.getElementById('auth-container').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
